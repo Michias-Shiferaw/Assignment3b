@@ -9,12 +9,12 @@ import java.util.Scanner;
 
 /**
 * This program lets the user perform a randomized Binary Search. 
-* This program generate a random list of 250 values and present them to the user.
+* This program generates a random list of 250 values and presents them to the user.
 * Ranging from 0 to 600.
 * Then the list is sorted from least to greatest and presented to the user again. 
-* The user enter a number to be found or added. 
+* The user enters a number to be found or added. 
 * If the user wants to find a number;
-* The prorgram will search the number within the array by dividing the search interval in half.
+* The program will search the number within the array by dividing the search interval in half.
 * Compare values and narrow into halves
 * Repeatedly check until the value is found or the interval is empty.
 * If the number is in the list, the position will be returned. 
@@ -31,7 +31,6 @@ public class BinarySearch {
   * opening the 'searching' .
   */
   public static int searching(List<Integer> inputArray, int numIn) {
-    //Checks if input is in array and return answer
     
     int lowerBound = 0;
     int upperBound = (inputArray.size() - 1);
@@ -105,7 +104,7 @@ public class BinarySearch {
     Scanner inputter = new Scanner(System.in);
     //Declare varaible
     String verify = null; 
-    String verifyy = null;
+    String checker = null;
     String options = null;
     int numIn = 0;
     int max = 250;
@@ -162,17 +161,23 @@ public class BinarySearch {
       //closing for get number
       if (options.equals("N")) {
         //insert value
-        try {
-          //check if response is an integer
-          //String verify = null;
-          System.out.println("Please enter an integer!");
-          verify = br.readLine();
-          newAdd = Integer.parseInt(verify);
-        } catch (IllegalArgumentException x) { 
-          System.out.println("Please enter an integer!");
+        boolean validiate = false;
+        System.out.println("Please enter an integer!");
+        do { 
+          try {
+            //check if response is an integer
+            //insert value
+            verify = br.readLine();
+            newAdd = Integer.parseInt(verify);
+            validiate = false;
+          } catch (IllegalArgumentException x) { 
+            validiate = true;
+            System.out.println("Your input was not an integer!");
+            System.out.println("Please try again and enter an integer!");
 
-        }
-
+          }
+        } while (validiate != false); //continue to loop while the value is not false
+        
         randList.add(newAdd);
         //sort
         sortedList = sortList(randList); //sorts list from least to greatest 
@@ -180,15 +185,21 @@ public class BinarySearch {
       } else if (options.equals("S")) {
         //String verify = null;
         System.out.println("Please enter the integer you want to find here:!");
-        verifyy = br.readLine();
-        try {
-          //check if response is an integer
-          
-          numIn = Integer.parseInt(verifyy);
-        } catch (IllegalArgumentException x) { 
-          System.out.println("Please enter an integer!");
-        }
-  
+       
+        boolean validiate2 = false; 
+        do {
+          try {
+            //check if response is an integer
+            checker = br.readLine();
+            validiate2 = false;
+            numIn = Integer.parseInt(checker);
+          } catch (IllegalArgumentException x) { 
+            validiate2 = true;
+            System.out.println("Sorry this is not an integer");
+            System.out.println("Please try again and enter an integer you want to find!");
+          }
+        } while (validiate2 != false); //continue to loop while the value is not false
+        
         int looking = searching(sortedList, numIn);//search value
         
         if (looking == -1) {
@@ -202,7 +213,7 @@ public class BinarySearch {
       //need to reset to default
       options = ""; 
       verify = "";
-      verifyy = "";
+      checker = "";
       //numIn = "";
       numIn = 0;
       
